@@ -20,7 +20,7 @@ void put_float_in_buffer(float f) {
 
 uint8_t receiveMessageComm(uint8_t msg){
     switch(msg){
-        case REQUEST_DATA:
+        case SPI_REQUEST_DATA:
             if (next_index < 4) {
                 return buffer[next_index++];
             } else {

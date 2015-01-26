@@ -81,7 +81,7 @@ void __attribute__((__interrupt__,auto_psv)) _SPI1Interrupt(void){
 
         uint8_t buffer = SPI1BUF;
         while (SPI1STATbits.SPITBF);
-        if (buffer == READ_AGAIN) {
+        if (buffer == SPI_READ_AGAIN) {
             if (0 <= send_state && send_state < 20) {
                putByte(69);
                 ++send_state;
@@ -104,7 +104,7 @@ void __attribute__((__interrupt__,auto_psv)) _SPI1Interrupt(void){
                 // stateful, so recomputing is bad.
                 send_state = 0;
             } else {
-                int message = receiveMessageComm(buffer);
+                int message = buffer; // receiveMessageComm(buffer);
                 initate_send(buffer, message);
                 putByte(69);
             }
