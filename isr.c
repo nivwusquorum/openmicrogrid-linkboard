@@ -18,7 +18,7 @@ float ADC1value;
 int x=0;
 
 
-
+int readings_updated = 0;
 uint16_t battery_output_current_adc = 0;
 uint16_t battery_input_current_adc = 0;
 uint16_t battery_voltage_adc = 0;
@@ -92,5 +92,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCP1Interrupt()
     battery_input_current_adc = ADCBUF0;
     battery_voltage_adc = ADCBUF1;
     network_voltage_adc = ADCBUF2;
+
+    readings_updated = 1;
 
 }

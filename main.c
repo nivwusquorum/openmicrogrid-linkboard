@@ -35,7 +35,6 @@ int main()
 
 
         while(1){
-            blink(1);
             update_readings();
         }
 }
