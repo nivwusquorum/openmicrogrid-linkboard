@@ -64,16 +64,15 @@ long long ctr = 0;
 
 
 void __attribute__((__interrupt__,auto_psv)) _SPI1Interrupt(void){
-
     if (SPI1STATbits.SPIROV) {
         // error
         SPI1STATbits.SPIROV	= 0;			// clear overflow
 
         int trash = SPI1BUF;
-        putByte(55);
+        putByte(77);
         IFS0bits.SPI1IF = 0;
     } else if (!SPI1STATbits.SPIRBF) {
-        putByte(41);
+        putByte(66);
         IFS0bits.SPI1IF = 0;
     } else {
         // SPI1STATbits.SPIROV = 0;
@@ -81,6 +80,7 @@ void __attribute__((__interrupt__,auto_psv)) _SPI1Interrupt(void){
 
         uint8_t buffer = SPI1BUF;
         while (SPI1STATbits.SPITBF);
+        
         if (buffer == SPI_READ_AGAIN) {
             if (0 <= send_state && send_state < 20) {
                putByte(69);
@@ -104,12 +104,11 @@ void __attribute__((__interrupt__,auto_psv)) _SPI1Interrupt(void){
                 // stateful, so recomputing is bad.
                 send_state = 0;
             } else {
-                int message = buffer; // receiveMessageComm(buffer);
+                int message = receiveMessageComm(buffer);
                 initate_send(buffer, message);
                 putByte(69);
             }
         }
-
         IFS0bits.SPI1IF = 0;
     }
     if (ctr++>1000LL){

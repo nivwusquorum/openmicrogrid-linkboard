@@ -3,7 +3,11 @@
 #include <libq.h>
 #include <math.h>
 #include "SPI_DRIVER.h"
+
 #include "init.h"
+#include "utils.h"
+#include "isr.h"
+#include "ReadingModel.h"
 
 extern unsigned int TimerInterruptCount;
 
@@ -17,7 +21,6 @@ _FPOR(FPWRT_PWR128 )
 _FICD(ICS_PGD2 & JTAGEN_OFF)
 
 
-
 int main()
 {
 
@@ -27,6 +30,13 @@ int main()
 
         initSPI();
 
-        while(1){}
+
+        TRISFbits.TRISF5 = 0;
+
+
+        while(1){
+            blink(1);
+            update_readings();
+        }
 }
 

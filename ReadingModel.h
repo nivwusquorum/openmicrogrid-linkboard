@@ -4,6 +4,8 @@
 
 #define ADC_FORGET 0.1
 
+void update_readings();
+
 void on_battery_output_current_reading(double current_out_battery);
 void on_network_voltage_reading(double output_voltage);
 void on_battery_voltage_reading(double input_voltage);

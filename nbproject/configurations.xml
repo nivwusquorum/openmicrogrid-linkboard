@@ -9,6 +9,8 @@
       <itemPath>init.h</itemPath>
       <itemPath>LINK_INTERFACE.h</itemPath>
       <itemPath>SPI_DRIVER.h</itemPath>
+      <itemPath>utils.h</itemPath>
+      <itemPath>isr.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -23,6 +25,7 @@
       <itemPath>init.c</itemPath>
       <itemPath>SPI_DRIVER.c</itemPath>
       <itemPath>LINK_INTERFACE.c</itemPath>
+      <itemPath>utils.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -212,6 +215,7 @@
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="UART 1" value="true"/>
         <property key="UART 2" value="true"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>

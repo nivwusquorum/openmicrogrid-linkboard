@@ -1,3 +1,5 @@
+#include "isr.h"
+
 #include "p33FJ64GS406.h"
 #include <libq.h>
 #include <dsp.h>
@@ -16,9 +18,14 @@ float ADC1value;
 int x=0;
 
 
+
+uint16_t battery_output_current_adc = 0;
+uint16_t battery_input_current_adc = 0;
+uint16_t battery_voltage_adc = 0;
+uint16_t network_voltage_adc = 0;
+
 void __attribute__((__interrupt__, no_auto_psv)) _ADCP1Interrupt()
 {
-
     TRISFbits.TRISF6 = 0;
 
     LATFbits.LATF6 = 1;
@@ -81,22 +88,9 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCP1Interrupt()
     IFS6bits.ADCP1IF = 0; //clear interrupt flag   
     ADSTATbits.P1RDY = 0; //Clear ready bit
 
-    uint16_t battery_output_current_adc = ADCBUF3;
-    uint16_t battery_input_current_adc = ADCBUF0;
-    uint16_t battery_voltage_adc = ADCBUF1;
-    uint16_t network_voltage_adc = ADCBUF2;
-
-    double battery_voltage = (double)battery_voltage_adc*3.3/1024*(float)5.2;
-    on_battery_voltage_reading(battery_voltage);
-
-    double network_voltage = ((double)network_voltage_adc*3.3/1024)*(float)10.0;
-    on_network_voltage_reading(network_voltage);
-
-    double battery_input_current = ((double)battery_input_current_adc*3.3/1024-0.08)*(float)10.0;
-    on_battery_input_current_reading(battery_input_current);
-
-    double battery_output_current = ((double)battery_output_current_adc*3.3/1024-0.08)*(float)10.0;
-    on_battery_output_current_reading(battery_output_current);
-
+    battery_output_current_adc = ADCBUF3;
+    battery_input_current_adc = ADCBUF0;
+    battery_voltage_adc = ADCBUF1;
+    network_voltage_adc = ADCBUF2;
 
 }
