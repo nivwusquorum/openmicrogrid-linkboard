@@ -1,41 +1,30 @@
 #include "p33FJ64GS406.h"
 
-#include <libq.h>
-#include <math.h>
-#include "SPI_DRIVER.h"
-
-#include "init.h"
-#include "utils.h"
+#include "shared/p33FJ64GS406_drivers/board.h"
+#include "shared/p33FJ64GS406_drivers/adc.h"
+#include "shared/p33FJ64GS406_drivers/timer.h"
+#include "shared/p33FJ64GS406_drivers/spi_slave.h"
+#include "drivers/pwm.h"
 #include "isr.h"
 #include "ReadingModel.h"
-
-extern unsigned int TimerInterruptCount;
-
-/* Configuration Bit Settings */
-_FBS(BWRP_WRPROTECT_OFF);
-_FGS(GSS_OFF&GCP_OFF&GWRP_OFF);
-_FOSCSEL(FNOSC_FRC)
-_FOSC(FCKSM_CSECMD & OSCIOFNC_ON & POSCMD_NONE ) //it was CSECMDandON
-_FWDT(FWDTEN_OFF)
-_FPOR(FPWRT_PWR128 )
-_FICD(ICS_PGD2 & JTAGEN_OFF)
+#include "api.h"
 
 
 int main()
 {
+    init_board();
+    init_timer();
+    init_PWM();
+    init_ADC(6);
 
-        init_clock();
-	init_PWM();
-        init_ADC();
+    init_spi_slave();
+    spi_slave_set_handle_message(link_board_handle_message);
 
-        initSPI();
-
-
-        TRISFbits.TRISF5 = 0;
+    TRISFbits.TRISF5 = 0;
 
 
-        while(1){
-            update_readings();
-        }
+    while(1){
+        update_readings();
+    }
 }
 

@@ -25,7 +25,7 @@ void update_readings() {
         double battery_input_current = ((double)battery_input_current_adc*3.3/1024.0-0.07)*10.0;
         on_battery_input_current_reading(battery_input_current);
 
-        double battery_output_current = ((double)battery_output_current_adc*3.3/1024.0-0.02)*10.0;
+        double battery_output_current = ((double)battery_output_current_adc*3.3/1024.0-0.06)*10.0;
         on_battery_output_current_reading(battery_output_current);
 
         readings_updated = 0;
